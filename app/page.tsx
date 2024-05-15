@@ -22,7 +22,7 @@ export default function Home() {
             <input
               type="email"
               placeholder="Email"
-              className="border border-black rounded-lg p-2 w-[675px] "
+              className="border border-black rounded-lg p-2 w-[675px]"
             />
           </div>
           <button className="bg-green-800 w-1/4 text-white rounded-lg px-4 py-2 mt-2">RSVP</button>

@@ -1,5 +1,6 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Inter, Yellowtail } from "next/font/google";
+import { Yellowtail } from "next/font/google";
 import "./globals.css";
 
 const yellowtail = Yellowtail({ weight: "400", style: "normal", subsets: ["latin"] });
@@ -15,8 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={yellowtail.className}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={yellowtail.className}>{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
