@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-export async function POST(req: Request) {
+import { redirect } from "next/navigation";
+
+
+export async function POST(req: Request){
   try {
     const responseBody = await req.json();
     if (responseBody === undefined || responseBody === null ) {
@@ -17,12 +20,17 @@ export async function POST(req: Request) {
       throw new Error('Failed to create event');
     }
     if (newEventResponse) {
-      return new NextResponse(JSON.stringify(newEventResponse),
-        { status: 200, headers: { 'Content-Type': 'application/json' },
+      return new NextResponse(JSON.stringify(newEventResponse.id), {
+        status: 200, 
+        headers: { 'Content-Type': 'application/json' }, 
       });
     }
+    
   } catch (error) {
     console.error(error);
+    //@ts-ignore
     return new NextResponse(error.message, { status: 500 });
   }
+
+
 }

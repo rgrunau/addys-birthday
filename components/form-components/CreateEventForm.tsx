@@ -27,6 +27,13 @@ export default function CreateEventForm() {
       body: JSON.stringify(newEvent),
     });
 
+    if (response.ok) {
+      const eventId = await response.json();
+      router.push(`/events/${eventId}`);
+    } else {
+      console.error('Failed to create event');
+    }
+
     console.log('response:', response);
 }
 
