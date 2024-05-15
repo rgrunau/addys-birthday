@@ -1,12 +1,26 @@
 import InputGroup from "./inputGroup";
 import TextArea from "./textArea";
-
+import prisma from "@/lib/prisma";
 
 export default function CreateEventForm() { 
-
+  async function createEvent(formData: FormData) { 
+  'use server'
+  
+  
+  const response = await prisma.events.create({
+    data: {
+      name: formData.get('event-name') as string,
+      date: formData.get('event-date') as string,
+      time: formData.get('event-time') as string,
+      location: formData.get('event-location') as string,
+      eventDescription: formData.get('event-description') as string,
+    }
+  });
+  console.log(response)
+}
 
   return (
-     <form className="flex flex-col">
+     <form className="flex flex-col" action={createEvent}>
             <div className="w-3/5 my-2">
               <InputGroup
                 label="Event Name"

@@ -39,7 +39,9 @@ model Events {
   id               String             @id @default(cuid())
   name             String
   date             DateTime
+  time             DateTime
   location         String
+  eventDescription String
   invities         Invities[]
   acceptedInvities AcceptedInvities[]
   rejectedInvities RejectedInvities[]
