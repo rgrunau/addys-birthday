@@ -6,7 +6,7 @@ export default function SignInPage() {
 
   return (
     <div className={`${inter.className} w-full h-screen flex flex-col justify-center items-center`}>
-     <SignIn path="/sign-in" />
+     <SignIn path="/sign-in" fallbackRedirectUrl="dashboard" />
     </div>
   )
 
