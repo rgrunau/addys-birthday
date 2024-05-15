@@ -38,8 +38,7 @@ model RejectedInvities {
 model Events {
   id               String             @id @default(cuid())
   name             String
-  date             DateTime
-  time             DateTime
+  dateTime         DateTime
   location         String
   eventDescription String
   invities         Invities[]
