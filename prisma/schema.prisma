@@ -15,4 +15,34 @@ model Invities {
   rsvpStatus String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  eventId    String
+  event      Events   @relation(fields: [eventId], references: [id])
+}
+
+model AcceptedInvities {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  eventId   String
+  event     Events   @relation(fields: [eventId], references: [id])
+}
+
+model RejectedInvities {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  eventId   String
+  event     Events   @relation(fields: [eventId], references: [id])
+}
+
+model Events {
+  id               String             @id @default(cuid())
+  name             String
+  date             DateTime
+  location         String
+  invities         Invities[]
+  acceptedInvities AcceptedInvities[]
+  rejectedInvities RejectedInvities[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
