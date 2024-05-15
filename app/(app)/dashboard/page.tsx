@@ -1,13 +1,22 @@
-import { Inter } from "next/font/google"
-import AddInvitieForm from "@/components/addInvitieForm";
+import { inter } from "@/constants/fonts";
+import prisma from "@/lib/prisma";
 
-const inter = Inter({ weight: "400", style: "normal", subsets: ["latin"] });
+const getEvents = async () => {
+  const events = await prisma.events.findMany()
+  return events
+}
 
-export default function InviteDashboard() { 
 
+export default async function InviteDashboard() { 
+  const events = await getEvents()
+  console.log(events)
   return (
-    <div className={`${inter.className} text-black w-full h-screen flex flex-col justify-start`}>
-      dashboard
+    <div className={`${inter.className} text-black w-full h-screen flex flex-col justify-start mt-10`}>
+      {events.length === 0 && (
+        <div className="my-3">
+          <h2>You currently have no active events. </h2>
+        </div>
+      )}
     </div>
   )
 }
