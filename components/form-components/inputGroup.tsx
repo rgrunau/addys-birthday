@@ -1,6 +1,3 @@
-
-
-
 interface InputGroupProps { 
   label: string;
   type: string;
