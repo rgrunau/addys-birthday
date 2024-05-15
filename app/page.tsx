@@ -12,7 +12,7 @@ export default function Home() {
       </section>
       <section className="z-10 flex flex-col py-24 w-[960px]">
         <div className="my-2 py-4">
-          <h1 className="text-black text-center text-7xl">It's Addy's Birthday</h1>
+          <h1 className="text-black text-center text-7xl">"It\'s Addy\'s Birthday"</h1>
         </div>
         <div className="my-2 py-4">
           <p className="text-black text-center text-3xl">Enter Your Email and click the RSVP button</p>
