@@ -15,3 +15,11 @@ export interface Event {
   acceptedInvites: AcceptedInvite[];
   eventDescription: string;
 }
+
+export interface Invitie {
+  id: string;
+  eventId: string;
+  name: string;
+  email: string;
+  rsvpStatus: string;
+}
