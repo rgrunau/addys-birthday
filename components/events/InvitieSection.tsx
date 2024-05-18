@@ -1,11 +1,17 @@
+import {sendInvitationEmail} from '@/email-service/sendEmail'
 import InvitieForm from './InvitieForm'
 import InvitieChip from './InvitieChip'
+import SendInviteSection from './SendInviteSection';
 
-export default function InvitieSection({ invities }: { invities: any }) { 
- 
- 
-
+export default async function InvitieSection({ invities }: { invities: any }) { 
   
+  const handleClick = async () => { 
+    const eventId = window.location.pathname.split('/')[2];
+    const sendInvite = await sendInvitationEmail(eventId);
+    console.log('sendInvite', sendInvite);
+
+  }
+
 
   return (
     <>
@@ -29,15 +35,7 @@ export default function InvitieSection({ invities }: { invities: any }) {
             </div>
           </div>
       </section>
-      <section className='w-full flex items-center justify-center'>
-        <div className='w-full'>
-          <button
-            className='w-full my-2 rounded-md bg-green-500 text-white px-4 py-2'
-          >
-            Send Invites 
-          </button>
-        </div>
-      </section>
+      <SendInviteSection />
     </>
   )
 }
