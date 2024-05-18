@@ -42,7 +42,6 @@ export default async function IndEvent({ params }: { params: { id: string } }) {
       <div className="my-2">
         <p className="text-lg text-slate-700">{event?.eventDescription}</p>
       </div>
-      
       <InvitieSection invities={event?.invities} />
     </div>
   );
