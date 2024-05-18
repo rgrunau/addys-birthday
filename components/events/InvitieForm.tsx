@@ -1,10 +1,10 @@
 'use client'
-import { FormEvent } from "react"
+import { FormEvent, use, useRef } from "react"
 import InputGroup from "../form-components/inputGroup"
 
 
 export default function InvitieForm() { 
-
+  const formRef = useRef<HTMLFormElement>(null)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => { 
 
@@ -27,19 +27,22 @@ export default function InvitieForm() {
       })
       if (response.ok) {
         const newInvitee = await response.json()
+        console.log(newInvitee)
+        formRef.current?.reset()
       } else {
         throw new Error('Failed to add invitee')
       }
     } catch (error) {
       //@ts-ignore
-      setError(error.message)
+      console.error(error.message)
     }
-    
-   
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      ref={formRef}
+    >
         <div>
           <InputGroup
             id="inviteeName"
