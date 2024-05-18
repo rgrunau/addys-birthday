@@ -3,12 +3,11 @@
 import { useMemo } from "react"
 
 interface DateTimeComponentProps { 
-  date: Date | undefined
+  date: Date 
 }
 
 const DateTimeComponent = ({ date }: DateTimeComponentProps) => { 
   
-  if (!date) return null
   const convertDate = useMemo(() => {
     const newDate = new Date(date)
     return newDate.toDateString()
