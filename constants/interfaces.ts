@@ -4,17 +4,19 @@ export interface AcceptedInvite {
   eventId: string;
   userId: string;
   attending: boolean;
-
 }
 
-export interface Event { 
+export type Event = {
   id: string;
   name: string;
   dateTime: Date;
   location: string;
-  acceptedInvites: AcceptedInvite[];
   eventDescription: string;
-}
+  createdAt: Date;
+  updatedAt: Date;
+  acceptedInvites?: any[]; // replace any[] with the actual type if known
+  rejectedInvites?: any[]; // replace any[] with the actual type if known
+};
 
 export interface Invitie {
   id: string;
