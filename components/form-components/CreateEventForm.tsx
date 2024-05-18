@@ -8,9 +8,7 @@ export default function CreateEventForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log('form data:',formData);
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
     const eventDateTimestamp = new Date(`${data.eventDate} ${data.eventTime}`)
     const newEvent = {
       name: data.eventName,

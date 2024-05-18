@@ -1,4 +1,3 @@
-import { useState } from "react";
 import InputGroup from "./inputGroup";
 
 interface DatePickerProps { 
@@ -19,8 +18,6 @@ export default function DatePicker({ id, label, placeholder, name, required }: D
       placeholder={placeholder}
       name={name}
       required={required}
-      value={date}
-      onChange={(e) => setDate(e.target.value)}
     />
   )
 }
