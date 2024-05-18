@@ -13,16 +13,20 @@ export default function AddInvitieForm() {
       <form className="text-black text-xl mx-auto h-screen">
         <div className="w-full flex items-center justify-evenly">
           <InputGroup
+            id="firstName"
             label={"First Name:"}
             type={"text"}
             placeholder={"Invitie's First Name"}
             name={"firstName"}
+            required
           />
           <InputGroup
+            id="email"
             label={"email:"}
             type="email"
             placeholder={"Invitie's email"}
             name={"email"}
+            required
           />
         </div>
       </form>
