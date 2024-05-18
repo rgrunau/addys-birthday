@@ -14,8 +14,8 @@ export type Event = {
   eventDescription: string;
   createdAt: Date;
   updatedAt: Date;
-  acceptedInvites?: any[]; // replace any[] with the actual type if known
-  rejectedInvites?: any[]; // replace any[] with the actual type if known
+  acceptedInvites?: AcceptedInvite[]; // replace any[] with the actual type if known
+  rejectedInvites?: AcceptedInvite[]; // replace any[] with the actual type if known
 };
 
 export interface Invitie {

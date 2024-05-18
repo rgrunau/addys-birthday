@@ -25,7 +25,6 @@ export default function EventCard({ event }: { event: Event }) {
             <h3>RSVP:</h3>
           </div>
           <div>
-            {/* <p>Yes: {event?.acceptedInvites.length }</p> */}
           </div>
         </div>
       </Link>
