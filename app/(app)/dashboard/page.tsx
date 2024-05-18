@@ -10,7 +10,7 @@ const getEvents = async () => {
 
 export default async function InviteDashboard() { 
   const events = await getEvents()
- 
+  console.log(events)
   return (
     <div className={`${inter.className} text-black w-full h-screen flex flex-col justify-start mt-3`}>
       {events.length === 0 && (

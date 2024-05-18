@@ -3,7 +3,11 @@ import DateTimeComponent from '@/components/shared/DateTime'
 import { Event } from '@/constants/interfaces'
 
 
-export default function EventCard({ event }: { event: Event }) {
+interface EventCardProps { 
+  event: Event;
+}
+
+export default function EventCard({ event }: EventCardProps) {
   return (
     <li key={event.id}>
       <Link
