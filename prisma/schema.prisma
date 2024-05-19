@@ -37,6 +37,8 @@ model RejectedInvities {
 
 model Events {
   id               String             @id @default(cuid())
+  creatorId        String
+  creator          Users              @relation(fields: [creatorId], references: [id])
   name             String
   dateTime         DateTime
   location         String
@@ -46,4 +48,13 @@ model Events {
   rejectedInvities RejectedInvities[]
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
+}
+
+model Users {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  events    Events[]
 }
