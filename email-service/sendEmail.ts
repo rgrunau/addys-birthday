@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import { createTransport } from 'nodemailer';
 import { getEventDetails } from '@/lib/getEventDetails';
+import { getEnvironmentURL } from '@/lib/provideURLS';
 
 const getEventInvitations = async (eventId: string) => { 
   return await prisma.invities.findMany({
@@ -12,6 +13,7 @@ const getEventInvitations = async (eventId: string) => {
 
 
 export const sendInvitationEmail = async (eventId: string) => {
+  const baseUrl = getEnvironmentURL();
   const event = await getEventDetails(eventId);
   if (!event) {
     throw new Error('Event not found');
@@ -45,7 +47,7 @@ export const sendInvitationEmail = async (eventId: string) => {
             <p>RSVP: ${invitation.email}</p>
           </div>
           <div>
-            <a href="http://localhost:3000/rsvp/${event.id}?email=${invitation.email}">RSVP</a>
+            <a href="http://${baseUrl}/rsvp/${event.id}?email=${invitation.email}">RSVP</a>
           </div>
         </div>
       `,
