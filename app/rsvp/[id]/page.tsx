@@ -1,20 +1,37 @@
+import { inter } from "@/constants/fonts";
 import prisma from "@/lib/prisma"
-const checkEmail = async (id: string)=> { 
-  let verified = false;
-  // const invitee = await prisma.invities.findUnique({
-  //   where: {
-
-  //     eventId: id
-  //   },
-  // });
-  // if (invitee) {
-  //   verified = true;
+interface checkInviteProps { 
+  email: string
+  id: string
+}
+const checkEmail = async ({email, id}: checkInviteProps)=> { 
+  try {
+    const invitee = await prisma.invities.findUnique({
+    where: {
+      email: email,
+      eventId: id
+    },
+    select: {
+      email: true,
+      eventId: true
+    }
+    });
+    return invitee;
+  } catch (error) {
+    console.log(error);
   }
+  
+}
+  
+interface RSVPPageProps { 
+  params: { id: string }
+  searchParams: string
+}
 
-export default async function EventRSVPPage({ params }: { params: { id: string } }) { 
+export default async function EventRSVPPage({ params, searchParams }: RSVPPageProps) { 
   // const hasEmail = await checkEmail(params.id);
   const { id } = params;
-  console.log(params);
+  console.log(searchParams);
   return (
     <div className="w-full">
       rsvp page
