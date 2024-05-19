@@ -45,7 +45,7 @@ export const sendInvitationEmail = async (eventId: string) => {
             <p>RSVP: ${invitation.email}</p>
           </div>
           <div>
-            <a href="http://localhost:3000/rsvp/${event.id}?${invitation.email}">RSVP</a>
+            <a href="http://localhost:3000/rsvp/${event.id}?email=${invitation.email}">RSVP</a>
           </div>
         </div>
       `,
