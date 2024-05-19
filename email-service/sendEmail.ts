@@ -1,5 +1,4 @@
 import { createTransport } from 'nodemailer';
-import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
 const getEventInvitations = async (eventId: string) => { 
@@ -15,20 +14,27 @@ export const sendInvitationEmail = async (eventId: string) => {
   const transporter = createTransport({
     service: 'gmail',
     auth: {
-      user: 'your-email@gmail.com',
-      pass: 'your-password',
+      user: `${process.env.GMAIL_USER}`,
+      pass: `${process.env.GMAIL_PASS}`,
     },
   })
   console.log('invitations', invitations);
-  return new NextResponse(JSON.stringify(invitations), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' }
+  
+  invitations.forEach((invitation) => { 
+
+    const mailOptions = {
+      from: 'robertgrunau@gmail.com',
+      to: invitation.email,
+      subject: "Adeliaide's Birthday Party!",
+      text: `Hi ${invitation.name}, you are invited to Adeliaide's birthday party!`,
+      html: `<p>Hi ${invitation.name}, you are invited to Adeliaide's birthday party!</p>`,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('sendMail error', error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
   });
-  // const mailOptions = {
-  //   from: 'robertgrunau@gmail.com',
-  //   to: email,
-  //   subject: "Adeliaide's Birthday Party!",
-  //   text: `Hi ${name}, you are invited to Adeliaide's birthday party!`,
-  //   html: `<p>Hi ${name}, you are invited to Adeliaide's birthday party!</p>`,
-  // };
 };
