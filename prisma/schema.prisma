@@ -10,9 +10,6 @@ datasource db {
 
 model Invitations {
   id         String    @id @default(cuid())
-  name       String
-  email      String    @unique
-  rsvpStatus String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   eventId    String

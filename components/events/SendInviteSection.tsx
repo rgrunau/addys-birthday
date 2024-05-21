@@ -14,7 +14,7 @@ export default function SendInviteSection() {
     console.log('sendInvite', response);
   }
   return (
-    <section className='w-full flex items-center justify-center'>
+    <section className='w-full xl:w-2/3 flex items-center justify-center'>
         <div className='w-full'>
           <button
             className='w-full my-2 rounded-md bg-green-500 text-white px-4 py-2'

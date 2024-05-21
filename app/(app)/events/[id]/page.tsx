@@ -16,9 +16,18 @@ const getEventDetails = async (id: string) => {
       eventDescription: true,
       dateTime: true, 
       location: true,
-      invities: {
-       where: { eventId: id },
-      },
+      invitations: {
+        select: {
+          id: true,
+          Invities: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            }
+          }
+        }
+      }
     },
   });
   return event;
@@ -44,7 +53,7 @@ export default async function IndEvent({ params }: { params: { id: string } }) {
       <div className="my-2">
         <p className="text-lg text-slate-700">{event?.eventDescription}</p>
       </div>
-      <InvitieSection invities={event?.invities} />
+      <InvitieSection invities={event?.invitations} />
     </div>
   );
 }

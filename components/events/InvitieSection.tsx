@@ -1,18 +1,9 @@
-import {sendInvitationEmail} from '@/email-service/sendEmail'
 import InvitieForm from './InvitieForm'
 import InvitieChip from './InvitieChip'
 import SendInviteSection from './SendInviteSection';
 
 export default async function InvitieSection({ invities }: { invities: any }) { 
   
-  const handleClick = async () => { 
-    const eventId = window.location.pathname.split('/')[2];
-    const sendInvite = await sendInvitationEmail(eventId);
-    console.log('sendInvite', sendInvite);
-
-  }
-
-
   return (
     <>
       <section>
