@@ -2,6 +2,8 @@ import prisma from '@/lib/prisma';
 import { createTransport } from 'nodemailer';
 import { getEventDetails } from '@/lib/getEventDetails';
 import { getEnvironmentURL } from '@/lib/provideURLS';
+import { renderToStaticMarkup } from 'react-dom/server';
+import EmailTemplate from '@/components/email/EmailTemplate';
 
 const getEventInvitations = async (eventId: string) => { 
   return await prisma.invities.findMany({
@@ -28,7 +30,13 @@ export const sendInvitationEmail = async (eventId: string) => {
     },
   })
   console.log('invitations', invitations);
-  
+  // const emailTemplate = renderToStaticMarkup(
+  //   <EmailTemplate 
+  //     eventId={eventId}
+  //     eventDate={eventDate}
+  //     eventLocation = { event?.location }
+  //     />
+  // );
   invitations.forEach((invitation) => { 
 
     const mailOptions = {
