@@ -1,5 +1,5 @@
 'use client'
-import { FormEvent, use, useRef } from "react"
+import { FormEvent, useRef } from "react"
 import InputGroup from "../form-components/inputGroup"
 
 
@@ -40,6 +40,7 @@ export default function InvitieForm() {
 
   return (
     <form
+      className='w-full xl:w-2/3'
       onSubmit={handleSubmit}
       ref={formRef}
     >

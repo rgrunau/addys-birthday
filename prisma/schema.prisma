@@ -8,15 +8,26 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model Invities {
-  id         String   @id @default(cuid())
-  name       String
-  email      String   @unique
-  rsvpStatus String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Invitations {
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   eventId    String
-  event      Events   @relation(fields: [eventId], references: [id])
+  event      Events    @relation(fields: [eventId], references: [id])
+  Invities   Invities? @relation(fields: [invitiesId], references: [id])
+  invitiesId String?
+}
+
+model Invities {
+  id          String        @id @default(cuid())
+  name        String
+  email       String        @unique
+  rsvpStatus  String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  eventId     String
+  event       Events        @relation(fields: [eventId], references: [id])
+  invitations Invitations[]
 }
 
 model AcceptedInvities {
@@ -37,13 +48,26 @@ model RejectedInvities {
 
 model Events {
   id               String             @id @default(cuid())
+  creatorId        String
+  creator          Users              @relation(fields: [creatorId], references: [id])
   name             String
   dateTime         DateTime
   location         String
   eventDescription String
-  invities         Invities[]
+  invitations      Invitations[]
   acceptedInvities AcceptedInvities[]
   rejectedInvities RejectedInvities[]
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
+  Invities         Invities[]
+}
+
+model Users {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  clerkId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  events    Events[]
 }

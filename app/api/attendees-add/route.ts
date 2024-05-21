@@ -16,10 +16,18 @@ export async function POST(req:Request) {
     });
 
     if (attendee) {
-      return new NextResponse(JSON.stringify(attendee), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const addInvitations = await prisma.invitations.create({
+        data: {
+          eventId: eventId,
+          invitiesId: attendee.id,
+        },
+      })
+      if (addInvitations) { 
+        return new NextResponse(JSON.stringify(attendee), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
     }
   } catch (error) {
     console.error('server error',error);

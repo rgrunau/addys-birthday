@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-
+import { getCurrentUserByClerkId } from "@/lib/getLoggedInUser";
 
 export async function POST(req: Request){
   try {
+    const creator = await getCurrentUserByClerkId();
     const responseBody = await req.json();
     if (responseBody === undefined || responseBody === null ) {
       throw new Error('Invalid request body');
@@ -11,7 +12,8 @@ export async function POST(req: Request){
     }
     const newEventResponse = await prisma.events.create({
       data: {
-        ...responseBody
+        ...responseBody,
+        creatorId: creator,
       }
     }) 
     console.log(newEventResponse);
