@@ -1,20 +1,37 @@
 'use client';
+import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import InputGroup from "./inputGroup";
 import TextArea from "./textArea";
 
 export default function CreateEventForm() { 
+  const fileInput = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
+    let imageUrl = null;
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     const eventDateTimestamp = new Date(`${data.eventDate} ${data.eventTime}`)
+    const eventUpload = fileInput.current?.files?.[0];
+    if (eventUpload) {
+      const uploadResponse = await fetch(`/api/event-upload?filename=${eventUpload.name}`, {
+        method: 'POST',
+        body: eventUpload,
+      });
+      imageUrl = await uploadResponse.json();
+      console.log('imageUrl:', imageUrl);
+    } else {
+      imageUrl = '';
+    }
+    
+    
     const newEvent = {
       name: data.eventName,
       dateTime: eventDateTimestamp,
       location: data.eventLocation,
       eventDescription: data.eventDescription,
+      eventImage: imageUrl.url,
     };
 
     const response = await fetch('/api/create-event', {
@@ -78,6 +95,14 @@ export default function CreateEventForm() {
             name="eventLocation"
             required={true}
           />
+        </div>
+        <div className="w-full my-2 flex flex-col py-2">
+          <div>
+            <label htmlFor="eventImage" className="text-sm text-gray-600">Upload an image</label>
+          </div>
+          <div>
+            <input type="file" ref={fileInput} name="eventImage" id="eventImage" accept="image/*" />
+          </div>
         </div>
         <div className="w-full my-2">
           <TextArea

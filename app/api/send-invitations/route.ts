@@ -3,7 +3,7 @@ import { sendInvitationEmail } from "@/email-service/sendEmail";
 
 export async function POST(req: Request) { 
   const { eventId } = await req.json();
-  
+  console.log('eventId', eventId);
   try {
     const sendInvite = await sendInvitationEmail(eventId);
     console.log('sendInvite', sendInvite);

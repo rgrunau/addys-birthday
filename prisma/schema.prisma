@@ -54,6 +54,7 @@ model Events {
   dateTime         DateTime
   location         String
   eventDescription String
+  eventImage       String?
   invitations      Invitations[]
   acceptedInvities AcceptedInvities[]
   rejectedInvities RejectedInvities[]
