@@ -19,7 +19,7 @@ export default function CreateEventForm() {
         method: 'POST',
         body: eventUpload,
       });
-      imageUrl = uploadResponse.json();
+      imageUrl = await uploadResponse.json();
       console.log('imageUrl:', imageUrl);
     } else {
       imageUrl = '';
@@ -31,7 +31,7 @@ export default function CreateEventForm() {
       dateTime: eventDateTimestamp,
       location: data.eventLocation,
       eventDescription: data.eventDescription,
-      eventImage: imageUrl,
+      eventImage: imageUrl.url,
     };
 
     const response = await fetch('/api/create-event', {

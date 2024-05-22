@@ -7,9 +7,9 @@ export default function EmailTemplate(props) {
   return (
     <Html lang='en' dir='ltr'>
       <Head>
-        <title>Adeliaide's Birthday Party</title>
+        <title>{props.event.name }</title>
       </Head>
-      <Img href={props.eventAsset} />
+      <img src={props.eventAsset} alt='Adeliaide Birthday Party' />
       <Text
         style={{
           backgroundColor: '#fff',
@@ -21,7 +21,7 @@ export default function EmailTemplate(props) {
           textAlign: 'center',
         }}
       >
-        Hi {props.invitieName}, you are invited to Adeliaide's birthday party!
+        Hi {props.inviteeName},
         
       </Text>
       <Text>
@@ -30,7 +30,21 @@ export default function EmailTemplate(props) {
       <Text>
         Where: {props.eventLocation}
       </Text>
+      <Text>
+        {props.event.eventDescription}
+      </Text>
       <Button
+        style={{
+          backgroundColor: '#f01d71',
+          color: '#fff',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          display: 'block',
+          margin: '0 auto',
+          textDecoration: 'none',
+          textAlign: 'center',
+          width: '250px',
+        }}
         href={`http://${props.baseUrl}/rsvp/${props.eventId}?email=${props.invitationEmail}`}  
       >
         RSVP

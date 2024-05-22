@@ -16,7 +16,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   const blob = await put(fileName, req.body, {
     access: 'public',
   })
-
+  console.log('blob:', blob);
   return NextResponse.json(blob as PutBlobResult)
 
 }
