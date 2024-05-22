@@ -1,8 +1,8 @@
-import prisma from '@/lib/prisma';
 import { createTransport } from 'nodemailer';
 import { getEventDetails } from '@/lib/getEventDetails';
 import { getEnvironmentURL } from '@/lib/provideURLS';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { render } from '@react-email/render' 
+import prisma from '@/lib/prisma';
 import EmailTemplate from '@/components/email/EmailTemplate';
 
 const getEventInvitations = async (eventId: string) => { 
@@ -21,6 +21,7 @@ export const sendInvitationEmail = async (eventId: string) => {
     throw new Error('Event not found');
   }
   const eventDate = new Date(event?.dateTime).toLocaleDateString();
+  const eventLocation = event?.location;
   const invitations = await getEventInvitations(eventId);
   const transporter = createTransport({
     service: 'gmail',
@@ -30,35 +31,16 @@ export const sendInvitationEmail = async (eventId: string) => {
     },
   })
   console.log('invitations', invitations);
-  // const emailTemplate = renderToStaticMarkup(
-  //   <EmailTemplate 
-  //     eventId={eventId}
-  //     eventDate={eventDate}
-  //     eventLocation = { event?.location }
-  //     />
-  // );
   invitations.forEach((invitation) => { 
+  const toAddress = invitation.email;
+  const emailTemplate = render(EmailTemplate({ event, eventDate, baseUrl, eventId, eventLocation, toAddress  }));
 
     const mailOptions = {
       from: 'robertgrunau@gmail.com',
       to: invitation.email,
       subject: "Adeliaide's Birthday Party!",
       text: `Hi ${invitation.name}, you are invited to Adeliaide's birthday party!`,
-      html: `<p>Hi ${invitation.name}, you are invited to Adeliaide's birthday party!</p>
-        <div>
-          <h2>${event?.name}</h2>
-          <p>When: ${eventDate}</p>
-          <p>Where: ${event?.location}</p>
-        </div>
-        <div>
-          <div>
-            <p>RSVP: ${invitation.email}</p>
-          </div>
-          <div>
-            <a href="http://${baseUrl}/rsvp/${event.id}?email=${invitation.email}">RSVP</a>
-          </div>
-        </div>
-      `,
+      html: emailTemplate
     };
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
