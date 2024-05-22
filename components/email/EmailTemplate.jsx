@@ -1,5 +1,4 @@
-import PartyImage from '@/app/images/addy_bday_background.webp'
-import { Html, Head, Text, Button, Image } from "@react-email/components";
+import { Html, Head, Text, Button, Img } from "@react-email/components";
 
 
 export default function EmailTemplate(props) {
@@ -10,7 +9,7 @@ export default function EmailTemplate(props) {
       <Head>
         <title>Adeliaide's Birthday Party</title>
       </Head>
-      {/* <Image href={} />k */}
+      <Img href={props.eventAsset} />
       <Text
         style={{
           backgroundColor: '#fff',

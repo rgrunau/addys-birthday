@@ -22,7 +22,9 @@ export const sendInvitationEmail = async (eventId: string) => {
   }
   const eventDate = new Date(event?.dateTime).toLocaleDateString();
   const eventLocation = event?.location;
+  const eventAsset = event?.eventImage;
   const invitations = await getEventInvitations(eventId);
+
   const transporter = createTransport({
     service: 'gmail',
     auth: {
@@ -33,7 +35,7 @@ export const sendInvitationEmail = async (eventId: string) => {
   console.log('invitations', invitations);
   invitations.forEach((invitation) => { 
   const toAddress = invitation.email;
-  const emailTemplate = render(EmailTemplate({ event, eventDate, baseUrl, eventId, eventLocation, toAddress  }));
+  const emailTemplate = render(EmailTemplate({ event, eventDate, baseUrl, eventId, eventLocation, toAddress, eventAsset  }));
 
     const mailOptions = {
       from: 'robertgrunau@gmail.com',
