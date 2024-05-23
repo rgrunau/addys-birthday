@@ -1,7 +1,6 @@
-import { createTransport } from 'nodemailer';
+
 import { getEventDetails } from '@/lib/getEventDetails';
 import { getEnvironmentURL } from '@/lib/provideURLS';
-import { render } from '@react-email/render';
 import { Resend } from 'resend';
 import prisma from '@/lib/prisma';
 import EmailTemplate from '@/components/email/EmailTemplate';
@@ -16,11 +15,7 @@ const getEventInvitations = async (eventId: string) => {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const resendEmail = async (email: string, event: any) => { 
 
-
-  
-}
 
 export const sendInvitationEmail = async (eventId: string) => {
   const baseUrl = getEnvironmentURL();
@@ -35,7 +30,7 @@ export const sendInvitationEmail = async (eventId: string) => {
   const invitations = await getEventInvitations(eventId);
 
  
-  invitations.forEach(async (invitation) => { 
+  const data =invitations.forEach(async (invitation) => { 
     const invitationEmail = invitation.email;
     const inviteeName = invitation.name;
     // const emailTemplate = render(EmailTemplate({ event, eventDate, baseUrl, eventId, eventLocation, inviteeName, invitationEmail, eventAsset  }));
@@ -53,7 +48,10 @@ export const sendInvitationEmail = async (eventId: string) => {
       }
       return Response.json({data}, {status: 200});
     } catch (error) {
-      
+      console.error(error);
+      return Response.json({error: error}, {status: 500}); 
     }
   });
+  console.log(data);
+  return data;
 }
