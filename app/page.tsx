@@ -12,8 +12,8 @@ export default function Home() {
         <div className="w-full max-w-4xl my-28 z-10 flex items-center justify-start bg-slate-400/45 px-6 py-8 rounded-lg ">
           <div className="w-full">
             <h2 className="text-5xl text-black font-bold">Welcome</h2>
-            <p className="text-2xl text-black font-normal">Addy's Birthday is a special event that you are invited to. We hope you can make it!</p>
-            <p className="text-2xl text-black font-normal">An over the top app her Dad built because he doens't know when to stop</p>
+            <p className="text-2xl text-black font-normal">{"Addy's Birthday is a special event that you are invited to. We hope you can make it!"}</p>
+            <p className="text-2xl text-black font-normal">{"An over the top app her Dad built because he doens't know when to stop"}</p>
           </div>
         </div>
         <div className="w-full absolute">  
