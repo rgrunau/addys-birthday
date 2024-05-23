@@ -37,15 +37,17 @@ export async function POST(req: Request) {
 
     try {
       const { data, error } = await resend.emails.send({
-        from: 'robertgrunau@hey.com',
+        from: 'signe@addys-birthday.org',
         to: `${invitationEmail}`,
         subject: 'You are invited to Addy\'s Birthday',
         react: EmailTemplate({ event, eventDate, baseUrl, eventId, eventLocation, inviteeName, invitationEmail, eventAsset  }),
       });
 
       if (error) {
+        console.error(error);
         return Response.json({error: error.message}, {status: 500});
       }
+      console.log(data);
       return Response.json({data}, {status: 200});
     } catch (error) {
       console.error(error);
