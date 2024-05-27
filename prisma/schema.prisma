@@ -27,6 +27,7 @@ model Invities {
   updatedAt   DateTime      @updatedAt
   eventId     String
   event       Events        @relation(fields: [eventId], references: [id])
+  emailSent   Boolean       @default(false)
   invitations Invitations[]
 }
 

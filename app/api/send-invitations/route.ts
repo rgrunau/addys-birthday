@@ -4,13 +4,22 @@ import { getEventDetails } from "@/lib/getEventDetails";
 import { Resend } from 'resend';
 import prisma from '@/lib/prisma';
 import EmailTemplate from '@/components/email/EmailTemplate';
+import rateLimit from 'express-rate-limit';
 
 export const maxDuration = 60;
+
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again after 15 minutes",
+});
 
 const getEventInvitations = async (eventId: string) => { 
   return await prisma.invities.findMany({
     where: {
       eventId,
+      emailSent: false,
     },
   });
 };
@@ -18,6 +27,7 @@ const getEventInvitations = async (eventId: string) => {
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendEmails(invitations: any, event: any) { 
+  await limiter
   const baseUrl = getEnvironmentURL();
   const eventDate = new Date(event?.dateTime).toLocaleDateString();
   const eventLocation = event?.location;
