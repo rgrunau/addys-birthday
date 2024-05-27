@@ -45,7 +45,7 @@ export default function EmailTemplate(props) {
           textAlign: 'center',
           width: '250px',
         }}
-        href={`http://${props.baseUrl}rsvp/${props.eventId}?email=${props.invitationEmail}`}  
+        href={`${props.baseUrl}rsvp/${props.eventId}?email=${props.invitationEmail}`}  
       >
         RSVP
       </Button>
