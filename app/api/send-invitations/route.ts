@@ -55,8 +55,9 @@ export async function POST(req: Request) {
       return Response.json({error: error}, {status: 500}); 
     }
   });
-  console.log('post resned data: ', data);
-  return new NextResponse(JSON.stringify(data), {
+  const responseData = await data;
+  console.log('post resned data: ', responseData );
+  return new NextResponse(JSON.stringify(responseData), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
