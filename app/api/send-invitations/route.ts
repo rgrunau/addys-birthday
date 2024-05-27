@@ -17,50 +17,59 @@ const getEventInvitations = async (eventId: string) => {
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function POST(req: Request) { 
-  const { eventId } = await req.json();
+async function sendEmails(invitations: any, event: any) { 
   const baseUrl = getEnvironmentURL();
-  const event = await getEventDetails(eventId);
-  if (!event) {
-    throw new Error('Event not found');
-  }
   const eventDate = new Date(event?.dateTime).toLocaleDateString();
   const eventLocation = event?.location;
   const eventAsset = event?.eventImage;
-  
-  const invitations = await getEventInvitations(eventId);
-
-  console.log('invitations', invitations);
-  console.log('event', event);
-  const data =invitations.forEach(async (invitation) => { 
+  const eventId = event?.id;
+  //@ts-ignore
+  const sendEmailPromises = invitations.map(async (invitation) => { 
     const invitationEmail = invitation.email;
     const inviteeName = invitation.name;
-    // const emailTemplate = render(EmailTemplate({ event, eventDate, baseUrl, eventId, eventLocation, inviteeName, invitationEmail, eventAsset  }));
 
     try {
       const { data, error } = await resend.emails.send({
         from: 'signe@addys-birthday.org',
-        to: `${invitationEmail}`,
+        to: invitationEmail,
         subject: `You are invited to ${event.name}!`,
-        react: EmailTemplate({ event, eventDate, baseUrl, eventId, eventLocation, inviteeName, invitationEmail, eventAsset  }),
+        react: EmailTemplate({ event, eventDate, baseUrl, eventId, eventLocation, inviteeName, invitationEmail, eventAsset }),
       });
 
       if (error) {
         console.error(error);
-        return Response.json({error: error.message}, {status: 500});
+        return { error: error.message };
       }
-      console.log('response resend data',data);
-      return await Response.json({data}, {status: 200});
+
+      console.log('response resend data', data);
+      return { data };
     } catch (error) {
       console.error(error);
-      return Response.json({error: error}, {status: 500}); 
+      //@ts-ignore
+      return { error: error.message };
     }
   });
-  const responseData = await data;
-  console.log('post resned data: ', responseData );
-  return new NextResponse(JSON.stringify(responseData), {
+
+  return Promise.all(sendEmailPromises);
+}
+
+export async function POST(req: Request) { 
+  const { eventId } = await req.json();
+
+  const event = await getEventDetails(eventId);
+  if (!event) {
+    return new NextResponse(JSON.stringify({ error: 'Event not found' }), { status: 404 });
+  }
+
+  const invitations = await getEventInvitations(eventId);
+
+  console.log('invitations', invitations);
+  console.log('event', event);
+  const results = await sendEmails(invitations, event);
+
+  console.log('post resend data: ', results);
+  return new NextResponse(JSON.stringify(results), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
-
 }
