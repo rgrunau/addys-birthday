@@ -47,14 +47,14 @@ export async function POST(req: Request) {
         console.error(error);
         return Response.json({error: error.message}, {status: 500});
       }
-      console.log(data);
+      console.log('response resend data',data);
       return Response.json({data}, {status: 200});
     } catch (error) {
       console.error(error);
       return Response.json({error: error}, {status: 500}); 
     }
   });
-  console.log(data);
+  console.log('post resned data: ', data);
   return new NextResponse(JSON.stringify(data), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },

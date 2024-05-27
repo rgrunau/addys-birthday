@@ -16,7 +16,6 @@ export async function POST(req: Request){
         creatorId: creator,
       }
     }) 
-    console.log(newEventResponse);
     if (newEventResponse === undefined || newEventResponse === null) {
       throw new Error('Failed to create event');
     }

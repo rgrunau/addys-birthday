@@ -6,7 +6,6 @@ export async function POST(req: Request): Promise<NextResponse> {
   
   const { searchParams } = new URL(req.url);
   const fileName = searchParams.get('filename') as string;
-  console.log('fileName:', fileName);
   if (!fileName) {
     return new NextResponse('Missing file name', { status: 400 });
   }
@@ -16,7 +15,6 @@ export async function POST(req: Request): Promise<NextResponse> {
   const blob = await put(fileName, req.body, {
     access: 'public',
   })
-  console.log('blob:', blob);
   return NextResponse.json(blob as PutBlobResult)
 
 }

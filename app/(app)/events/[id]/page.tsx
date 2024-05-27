@@ -32,7 +32,6 @@ const getEventDetails = async (id: string) => {
 
 export default async function IndEvent({ params }: { params: { id: string } }) {
   const event = await getEventDetails(params.id);
-  console.log(event);
   return (
     <div className="w-full min-h-[90vh] rounded-lg p-2">
       <div className="w-full">
