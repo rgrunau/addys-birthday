@@ -49,7 +49,7 @@ export async function POST(req: Request) {
         return Response.json({error: error.message}, {status: 500});
       }
       console.log('response resend data',data);
-      return Response.json({data}, {status: 200});
+      return await Response.json({data}, {status: 200});
     } catch (error) {
       console.error(error);
       return Response.json({error: error}, {status: 500}); 
