@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import { sendInvitationEmail } from "@/email-service/sendEmail";
 import { getEnvironmentURL } from "@/lib/provideURLS";
 import { getEventDetails } from "@/lib/getEventDetails";
 import { Resend } from 'resend';
 import prisma from '@/lib/prisma';
 import EmailTemplate from '@/components/email/EmailTemplate';
+
+export const maxDuration = 60;
 
 const getEventInvitations = async (eventId: string) => { 
   return await prisma.invities.findMany({
