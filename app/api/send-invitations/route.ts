@@ -30,7 +30,8 @@ export async function POST(req: Request) {
   
   const invitations = await getEventInvitations(eventId);
 
- 
+  console.log('invitations', invitations);
+  console.log('event', event);
   const data =invitations.forEach(async (invitation) => { 
     const invitationEmail = invitation.email;
     const inviteeName = invitation.name;
